@@ -65,6 +65,10 @@ def build_generar(js_prompts: str) -> dict:
               [600, 220],
               {"method": "POST",
                "url": "https://api.anthropic.com/v1/messages",
+               # La API key va en una credencial de n8n (Header Auth con
+               # x-api-key), nunca en el JSON: este archivo se versiona en git.
+               "authentication": "genericCredentialType",
+               "genericAuthType": "httpHeaderAuth",
                "sendHeaders": True,
                "headerParameters": {"parameters": [
                    {"name": "anthropic-version", "value": "2023-06-01"},
