@@ -5,7 +5,7 @@
 [![IA](https://img.shields.io/badge/IA-Claude%20(opcional)-8A63D2)](prompts/)
 [![licencia](https://img.shields.io/badge/licencia-MIT-blue)](LICENSE)
 
-**Valida del aviso:** automatizar la programación y publicación de contenido en
+**Qué requisitos del aviso cubre:** automatizar la programación y publicación de contenido en
 redes · flujos que conectan **creación de contenido con publicación
 multicanal** · implementar **IA generativa** en flujos internos.
 
