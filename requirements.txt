@@ -1,0 +1,5 @@
+# Este proyecto corre con la librería estándar de Python.
+pytest>=8.0
+
+# Opcional: solo si quieres generar con Claude en vez de plantillas
+# anthropic>=0.40
