@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+.env
+# Salidas generadas por la simulación (se regeneran con los scripts)
+data/borradores.csv
+data/publicados.csv
+data/metricas.csv
