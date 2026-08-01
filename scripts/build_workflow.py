@@ -132,7 +132,8 @@ def build_generar(js_prompts: str) -> dict:
         "Armar fila de aprobación": {"main": [[{"node": "Cola · Agregar para aprobación", "type": "main", "index": 0}]]},
         "Cola · Agregar para aprobación": {"main": [[{"node": "Avisar al equipo que hay borradores", "type": "main", "index": 0}]]},
     }
-    return {"name": "Club STEM · 1. Generar borradores con IA",
+    return {"id": "clubstemgenerar",
+            "name": "Club STEM · 1. Generar borradores con IA",
             "nodes": nodes, "connections": connections,
             "settings": {"executionOrder": "v1"}, "pinData": {},
             "tags": [{"name": "club-stem"}, {"name": "redes"}]}
@@ -232,7 +233,8 @@ def build_publicar(js_filtrar: str) -> dict:
         "Publicar · LinkedIn": {"main": [conn_pub, conn_err]},
         "Registrar fallo para reintento": {"main": [[{"node": "Avisar fallo al equipo", "type": "main", "index": 0}]]},
     }
-    return {"name": "Club STEM · 2. Publicar aprobados",
+    return {"id": "clubstempublicar",
+            "name": "Club STEM · 2. Publicar aprobados",
             "nodes": nodes, "connections": connections,
             "settings": {"executionOrder": "v1"}, "pinData": {},
             "tags": [{"name": "club-stem"}, {"name": "redes"}]}
