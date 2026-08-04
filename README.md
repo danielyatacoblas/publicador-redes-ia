@@ -1,41 +1,78 @@
-# 02 · Publicador de redes con IA — idea → borrador → aprobación → multicanal
+<h1 align="center">Publicador de redes con IA</h1>
 
-[![tests](https://img.shields.io/badge/tests-44%20passed-brightgreen)](tests/)
-[![n8n](https://img.shields.io/badge/n8n-2%20workflows-orange)](workflows/)
-[![IA](https://img.shields.io/badge/IA-Claude%20(opcional)-8A63D2)](prompts/)
-[![licencia](https://img.shields.io/badge/licencia-MIT-blue)](LICENSE)
+<p align="center"><i>La IA redacta, una persona aprueba, el sistema publica</i></p>
 
-**Qué requisitos del aviso cubre:** automatizar la programación y publicación de contenido en
-redes · flujos que conectan **creación de contenido con publicación
-multicanal** · implementar **IA generativa** en flujos internos.
+<p align="center">![tests](https://img.shields.io/badge/tests-44%20passed-brightgreen) ![n8n](https://img.shields.io/badge/n8n-2%20workflows-EA4B71) ![IA](https://img.shields.io/badge/IA-Claude%20(opcional)-8A63D2) ![licencia](https://img.shields.io/badge/licencia-MIT-blue)</p>
 
 ---
 
-## 🎬 Qué hace
+## 🎥 Demo en video
 
+<!-- ────────────────────────────────────────────────────────────────────
+     ESPACIO RESERVADO PARA EL VIDEO
+
+     Cuando lo tengas subido a YouTube (recomiendo "no listado"), reemplaza
+     este bloque por la miniatura clickeable:
+
+     [![Ver la demo](https://img.youtube.com/vi/TU_VIDEO_ID/maxresdefault.jpg)](https://youtu.be/TU_VIDEO_ID)
+
+     Y borra el aviso de abajo.
+     ──────────────────────────────────────────────────────────────────── -->
+
+> 🎬 *Video de la demo en camino.* Mientras tanto, el proyecto corre completo
+> en local en menos de dos minutos siguiendo [⚡ Probarlo](#-probarlo-en-2-minutos).
+
+---
+
+## 🎯 El problema
+
+Adaptar cada pieza de contenido a Instagram, Facebook, LinkedIn y TikTok —con su largo, su tono y sus hashtags— consume horas por semana. Automatizarlo del todo tampoco sirve: publicar sin revisar, en nombre de una organización que trabaja con menores, es inaceptable.
+
+## 💡 Qué hace este proyecto
+
+1. **Un borrador por red**, con las reglas propias de cada una: LinkedIn sin emojis y tono institucional, TikTok corto y directo, Instagram con sus hashtags.
+2. **Cola de aprobación**: una persona aprueba, edita o rechaza. Lo editado vuelve a revisión.
+3. **Publicación programada** multicanal, solo de lo aprobado y en su fecha.
+4. **Nada se pierde en silencio**: si la API de una red falla, el post queda marcado y se reintenta, con aviso al equipo.
+5. **Mide qué funciona**: compara el rendimiento del texto de IA contra el editado por humanos.
+
+---
+
+## 🗺️ Cómo funciona
+
+```mermaid
+flowchart TD
+    C["🗓️ Calendario de contenido<br/>Google Sheets"] -->|cada día 08:00| P
+    P["🤖 Claude redacta<br/>un borrador por red"] --> Q
+    subgraph Q ["📋 Cola de aprobación"]
+        R{"Revisión<br/>humana"}
+    end
+    R -->|❌ rechaza| Z["Nunca se publica<br/>queda el motivo"]
+    R -->|✏️ edita| R
+    R -->|✅ aprueba| S{"¿Llegó su<br/>fecha?"}
+    S -->|todavía no| T["⏳ Espera"]
+    S -->|sí| U["📱 Instagram · Facebook · LinkedIn"]
+    U -->|error de API| V["⚠️ Marcado como fallido<br/>reintento + aviso"]
+    U -->|24 h después| W["📊 Métricas de vuelta<br/>al dashboard"]
 ```
-Calendario de contenido (Google Sheets)
-        │  (n8n, cada día 08:00)
-        ▼
-  Genera 1 borrador POR RED con reglas propias de cada una
-  (largo, tono, emojis, hashtags, CTA)   ← Claude o plantillas
-        ▼
-  ┌──────── COLA DE APROBACIÓN ────────┐
-  │  una persona: ✅ aprueba           │   ⛔ nada se publica
-  │               ✏️ edita → revisión   │      sin este paso
-  │               ❌ rechaza (con motivo)│
-  └──────────────┬─────────────────────┘
-                 ▼  (solo lo aprobado, en su fecha)
-   Instagram · Facebook · LinkedIn · TikTok
-                 │
-                 ├─ falla la API → estado "fallido" + reintento + aviso
-                 └─ 24 h después → métricas de vuelta → KPIs (proyecto 03)
+
+---
+
+## ⚡ Probarlo en 2 minutos
+
+```bash
+pip install pytest
+python scripts/generar_calendario.py    # 14 contenidos ficticios
+python scripts/simular_publicacion.py   # el ciclo completo end-to-end
+python -m pytest -v                     # 44 tests
 ```
 
-### La regla de oro, implementada en código
+Funciona **sin API key**: trae un motor de plantillas equivalente. Con
+`ANTHROPIC_API_KEY` usa Claude de verdad (`--motor claude`).
 
-`ColaAprobacion.publicar()` **lanza excepción** si el post no fue aprobado por
-una persona, y el nodo n8n aplica el mismo filtro. Hay tests para ambos:
+---
+
+### 🔒 La regla de oro está en el código, no en el README
 
 ```python
 def test_no_se_puede_publicar_sin_aprobacion():
@@ -43,178 +80,84 @@ def test_no_se_puede_publicar_sin_aprobacion():
         cola.publicar(clave)
 ```
 
----
-
-## ⚡ Probarlo en 2 minutos (sin API key ni n8n)
-
-```bash
-pip install pytest
-python scripts/generar_calendario.py       # 14 contenidos ficticios
-python scripts/simular_publicacion.py      # ciclo completo end-to-end
-python -m pytest tests/ -v                 # 44 tests
-```
-
-Salida real:
-
-```
-Motor de generación: plantillas
-Contenidos del calendario: 14
-Borradores generados y válidos: 36
-
-Revisión humana (obligatoria antes de publicar):
-  ✓ aprobados directo: 27
-  ✏ editados y aprobados: 5
-  ✗ rechazados: 4
-
-⚠ 4 publicaciones fallaron → reintento automático
-
-Publicación:
-  ✓ publicados: 32
-  ⚠ fallidos tras reintentos: 0
-  · rechazados (nunca se publican): 4
-
-Tasa de interacción por origen del texto:
-  humano       5.30 %  (5 posts)
-  plantillas   5.95 %  (27 posts)
-```
-
-> Ese último bloque responde a *"proponer mejoras a qué métricas se están
-> midiendo"*: medir si el contenido generado por IA rinde mejor o peor que el
-> editado por humanos permite decidir con datos, no con opinión.
-
-### Con Claude (opcional)
-
-```bash
-pip install anthropic
-set ANTHROPIC_API_KEY=sk-ant-...        # Windows (o export en Linux/Mac)
-python scripts/simular_publicacion.py --motor claude
-```
-
-Sin API key el sistema **funciona igual** con el motor de plantillas: eso hace
-que cualquiera pueda evaluar el repo sin gastar un sol.
-
----
-
-## 🎨 Ejemplo real de salida (mismo contenido, 3 redes)
-
-**Instagram** (2200 car., emojis, 8 hashtags):
-```
-🚀 ¡Abrimos inscripciones para Taller de Robótica para niñas y niños de 8 a 12 años!
-
-Cuatro sesiones para construir y programar su primer robot con piezas
-reutilizables. No se necesita experiencia previa ni computadora en casa.
-
-📅 3 de agosto   📍 Sede Villa El Salvador
-Cupos limitados: 24 niñas y niños.
-
-Escríbenos por DM 📩
-
-#ClubSTEM #EducacionSTEM #Peru #Inscripciones #TalleresSTEM #Robotica …
-```
-
-**LinkedIn** (sin emojis, tono institucional, 3 hashtags):
-```
-Abrimos convocatoria para Taller de Robótica para niñas y niños de 8 a 12 años.
-
-Cuatro sesiones para construir y programar su primer robot con piezas
-reutilizables. No se necesita experiencia previa ni computadora en casa.
-
-Este programa forma parte de nuestro compromiso con el acceso equitativo a
-la educación STEM en el Perú.
-
-Conversemos sobre alianzas
-
-#ClubSTEM #EducacionSTEM #Peru
-```
-
-**TikTok** (300 car., hook directo, corta en frase completa):
-```
-¿Taller de Robótica para niñas y niños de 8 a 12 años? 👀 Sí, y es gratis.
-Cuatro sesiones para construir y programar su primer robot con piezas reutilizables.
-
-Link en bio 🔗
-
-#ClubSTEM #EducacionSTEM #Peru #Inscripciones #TalleresSTEM
-```
-
----
-
-## 🐳 Con n8n de verdad
-
-```bash
-docker compose up -d          # http://localhost:5678
-```
-
-Importa los dos workflows de `workflows/`:
-
-| Workflow | Nodos | Qué hace |
-| --- | --- | --- |
-| `workflow_1_generar.json` | 8 | Calendario → prompts por red → Claude → cola de aprobación → aviso al equipo |
-| `workflow_2_publicar.json` | 11 | Lee aprobados → filtra → publica en IG/FB/LinkedIn → marca estado → maneja fallos |
-
-**Están partidos en dos a propósito**: entre generar y publicar hay una
-persona. Un solo workflow "todo automático" sería justamente lo que la
-política prohíbe.
-
-Configurar antes de activar: `REEMPLAZAR_ID_HOJA`, `REEMPLAZAR_CHAT_ID`,
-`REEMPLAZAR_ORG_ID` y la credencial Header Auth con `x-api-key` para Claude.
+`publicar()` lanza excepción si el post no fue aprobado por una persona, y el nodo de n8n aplica exactamente el mismo filtro. Hay tests para ambos: una promesa en la documentación se puede olvidar, un test no.
 
 ---
 
 ## 📁 Estructura
 
 ```
-02_publicador_redes_ia/
 ├── src/
 │   ├── generador.py           # reglas por red + motores plantillas/Claude
 │   └── cola_aprobacion.py     # estados, revisión humana, reintentos
 ├── workflows/
-│   ├── src/preparar_prompts.js     # arma el prompt por red
-│   ├── src/filtrar_publicables.js  # la regla de oro dentro de n8n
-│   ├── workflow_1_generar.json
-│   └── workflow_2_publicar.json
-├── prompts/                   # prompts versionados con criterios de aceptación
-│   ├── v1_convocatoria.md
-│   ├── v1_testimonio.md       # incluye reglas de protección de menores
-│   └── v1_tip_stem.md
-├── scripts/
-│   ├── generar_calendario.py  # 14 contenidos ficticios reproducibles
-│   ├── simular_publicacion.py # ciclo completo end-to-end
-│   └── build_workflow.py
-├── tests/                     # 44 tests
-├── POLITICA_REVISION.md       # checklist del aprobador y roles
-└── docker-compose.yml
+│   ├── workflow_1_generar.json   # calendario → Claude → cola
+│   └── workflow_2_publicar.json  # aprobados → redes → métricas
+├── prompts/                   # prompts versionados
+├── scripts/                   # data ficticia y simulación
+└── tests/                     # 44 tests
 ```
 
 ---
 
-## 🧪 Qué está probado
+## 🌿 Flujo de trabajo con Git
 
-| Área | Tests |
+El repositorio sigue **Git Flow**: `main` siempre desplegable, `develop` como
+integración, y una rama por cambio. Los merges son `--no-ff` para que cada
+funcionalidad quede como un bloque legible en el historial, y cada versión
+lleva su tag.
+
+```mermaid
+gitGraph
+   commit id: "chore: repo setup"
+   branch develop
+   checkout develop
+   branch feature/core
+   commit id: "feat: core logic"
+   checkout develop
+   merge feature/core
+   branch feature/tests
+   commit id: "test: suite"
+   checkout develop
+   merge feature/tests
+   checkout main
+   merge develop tag: "v1.0.0"
+   checkout develop
+   branch fix/review
+   commit id: "fix: review findings"
+   checkout develop
+   merge fix/review
+   checkout main
+   merge develop tag: "v1.1.0"
+```
+
+| Rama | Para qué |
 | --- | --- |
-| Reglas por red | Límite de caracteres, emojis solo donde corresponde, TikTok es el más corto |
-| Contenido | Incluye fecha/lugar/cupos, nunca deja variables `{}` sin reemplazar |
-| Recorte | No corta palabras a la mitad; prefiere cerrar en frase completa |
-| **Aprobación** | **No se puede publicar sin aprobación, ni rechazado, ni editado sin re-revisión** |
-| Programación | No publica antes de la fecha; sí cuando llega |
-| Fallos | Un error de API deja `fallido` (no `publicado`), reintenta hasta 3 veces |
-| Trazabilidad | El historial registra generado → aprobado → publicado con quién y cuándo |
-| **Nodo n8n** | El filtro del workflow bloquea pendientes, rechazados y aprobados sin revisor |
+| `main` | Solo versiones liberadas. Cada merge lleva su tag. |
+| `develop` | Integración de todo lo terminado. |
+| `feature/*` | Una funcionalidad nueva. |
+| `fix/*` | Una corrección concreta. |
+| `release/*` | Preparación de la versión, luego se fusiona a `main` y `develop`. |
+
+Los mensajes siguen [Conventional Commits](https://www.conventionalcommits.org/):
+`feat:`, `fix:`, `test:`, `docs:`, `chore:` — con el porqué del cambio en el
+cuerpo, no solo el qué.
 
 ---
 
-## 🔐 Decisiones de diseño
+## 📚 Documentación
 
-- **Funciona sin API key** (motor de plantillas): evaluable sin costo.
-- **Prompts versionados** con criterios de aceptación y reglas de protección
-  de menores, no sueltos dentro del código.
-- **Origen marcado** (`claude` / `humano`) para medir qué contenido rinde mejor.
-- **Nada se pierde en silencio**: los fallos quedan visibles y con aviso.
-- **Sin secretos en el repo**: las API keys van en el credential store de n8n.
+| Documento | Contenido |
+| --- | --- |
+| [`GUIA.md`](GUIA.md) | Guía técnica completa: arquitectura, decisiones, configuración y puesta en marcha |
+| [`POLITICA_REVISION.md`](POLITICA_REVISION.md) | Checklist del aprobador, roles y qué NO se automatiza a propósito |
+| [`prompts/`](prompts/) | Prompts versionados con criterios de aceptación y reglas de protección de menores |
 
 ---
 
-## 📌 Estado
+## 📄 Licencia
 
-✅ **Funcional y probado en local.** 44 tests en verde, dos workflows n8n
-importables, data ficticia incluida y prompts listos para usar con Claude.
+[MIT](LICENSE) · Daniel Yataco Blas
+
+> Proyecto de demostración construido con **datos ficticios**. No es un sistema
+> en producción de ninguna organización.
