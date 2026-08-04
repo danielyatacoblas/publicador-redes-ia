@@ -10,7 +10,7 @@
 
 ---
 
-## 🎥 Demo en video
+## Demo en video
 
 <!-- ────────────────────────────────────────────────────────────────────
      ESPACIO RESERVADO PARA EL VIDEO
@@ -23,16 +23,16 @@
      Y borra el aviso de abajo.
      ──────────────────────────────────────────────────────────────────── -->
 
-> 🎬 *Video de la demo en camino.* Mientras tanto, el proyecto corre completo
-> en local en menos de dos minutos siguiendo [⚡ Probarlo](#-probarlo-en-2-minutos).
+> *Video de la demo en camino.* Mientras tanto, el proyecto corre completo
+> en local en menos de dos minutos siguiendo [Probarlo](#probarlo-en-2-minutos).
 
 ---
 
-## 🎯 El problema
+## El problema
 
 Adaptar cada pieza de contenido a Instagram, Facebook, LinkedIn y TikTok —con su largo, su tono y sus hashtags— consume horas por semana. Automatizarlo del todo tampoco sirve: publicar sin revisar, en nombre de una organización que trabaja con menores, es inaceptable.
 
-## 💡 Qué hace este proyecto
+## Qué hace este proyecto
 
 1. **Un borrador por red**, con las reglas propias de cada una: LinkedIn sin emojis y tono institucional, TikTok corto y directo, Instagram con sus hashtags.
 2. **Cola de aprobación**: una persona aprueba, edita o rechaza. Lo editado vuelve a revisión.
@@ -42,27 +42,27 @@ Adaptar cada pieza de contenido a Instagram, Facebook, LinkedIn y TikTok —con 
 
 ---
 
-## 🗺️ Cómo funciona
+## Cómo funciona
 
 ```mermaid
 flowchart TD
-    C["🗓️ Calendario de contenido<br/>Google Sheets"] -->|cada día 08:00| P
-    P["🤖 Claude redacta<br/>un borrador por red"] --> Q
-    subgraph Q ["📋 Cola de aprobación"]
+    C[" Calendario de contenido<br/>Google Sheets"] -->|cada día 08:00| P
+    P[" Claude redacta<br/>un borrador por red"] --> Q
+    subgraph Q [" Cola de aprobación"]
         R{"Revisión<br/>humana"}
     end
-    R -->|❌ rechaza| Z["Nunca se publica<br/>queda el motivo"]
-    R -->|✏️ edita| R
-    R -->|✅ aprueba| S{"¿Llegó su<br/>fecha?"}
+    R -->| rechaza| Z["Nunca se publica<br/>queda el motivo"]
+    R -->| edita| R
+    R -->| aprueba| S{"¿Llegó su<br/>fecha?"}
     S -->|todavía no| T["⏳ Espera"]
-    S -->|sí| U["📱 Instagram · Facebook · LinkedIn"]
-    U -->|error de API| V["⚠️ Marcado como fallido<br/>reintento + aviso"]
-    U -->|24 h después| W["📊 Métricas de vuelta<br/>al dashboard"]
+    S -->|sí| U[" Instagram · Facebook · LinkedIn"]
+    U -->|error de API| V[" Marcado como fallido<br/>reintento + aviso"]
+    U -->|24 h después| W[" Métricas de vuelta<br/>al dashboard"]
 ```
 
 ---
 
-## ⚡ Probarlo en 2 minutos
+## Probarlo en 2 minutos
 
 ```bash
 pip install pytest
@@ -76,7 +76,7 @@ Funciona **sin API key**: trae un motor de plantillas equivalente. Con
 
 ---
 
-### 🔒 La regla de oro está en el código, no en el README
+### La regla de oro está en el código, no en el README
 
 ```python
 def test_no_se_puede_publicar_sin_aprobacion():
@@ -88,7 +88,7 @@ def test_no_se_puede_publicar_sin_aprobacion():
 
 ---
 
-## 📁 Estructura
+## Estructura
 
 ```
 ├── src/
@@ -104,7 +104,7 @@ def test_no_se_puede_publicar_sin_aprobacion():
 
 ---
 
-## 🌿 Flujo de trabajo con Git
+## Flujo de trabajo con Git
 
 El repositorio sigue **Git Flow**: `main` siempre desplegable, `develop` como
 integración, y una rama por cambio. Los merges son `--no-ff` para que cada
@@ -149,7 +149,7 @@ cuerpo, no solo el qué.
 
 ---
 
-## 📚 Documentación
+## Documentación
 
 | Documento | Contenido |
 | --- | --- |
@@ -159,7 +159,7 @@ cuerpo, no solo el qué.
 
 ---
 
-## 📄 Licencia
+## Licencia
 
 [MIT](LICENSE) · Daniel Yataco Blas
 

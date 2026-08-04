@@ -177,7 +177,7 @@
     {
       "parameters": {
         "chatId": "REEMPLAZAR_CHAT_ID",
-        "text": "=📝 Hay {{ $items().length }} borradores esperando aprobación en la hoja. Nada se publica hasta que alguien los revise.",
+        "text": "= Hay {{ $items().length }} borradores esperando aprobación en la hoja. Nada se publica hasta que alguien los revise.",
         "additionalFields": {}
       },
       "id": "tg-aviso",

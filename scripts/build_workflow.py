@@ -118,7 +118,7 @@ def build_generar(js_prompts: str) -> dict:
         _node("tg-aviso", "Avisar al equipo que hay borradores", "n8n-nodes-base.telegram", 1.2,
               [1260, 220],
               {"chatId": "REEMPLAZAR_CHAT_ID",
-               "text": "=📝 Hay {{ $items().length }} borradores esperando "
+               "text": "= Hay {{ $items().length }} borradores esperando "
                        "aprobación en la hoja. Nada se publica hasta que "
                        "alguien los revise.",
                "additionalFields": {}}),
@@ -212,7 +212,7 @@ def build_publicar(js_filtrar: str) -> dict:
         _node("tg-err", "Avisar fallo al equipo", "n8n-nodes-base.telegram", 1.2,
               [1100, 480],
               {"chatId": "REEMPLAZAR_CHAT_ID",
-               "text": "=⚠️ Falló la publicación de {{ $json.id_cola }}. "
+               "text": "= Falló la publicación de {{ $json.id_cola }}. "
                        "Queda en la cola para reintento.",
                "additionalFields": {}}),
     ]
