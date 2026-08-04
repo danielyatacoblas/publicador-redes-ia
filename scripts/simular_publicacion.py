@@ -162,7 +162,8 @@ def _csv(path: Path, filas: list[dict]):
         path.write_text("", encoding="utf-8")
         return
     with path.open("w", newline="", encoding="utf-8") as f:
-        wr = csv.DictWriter(f, fieldnames=list(filas[0].keys()))
+        wr = csv.DictWriter(f, fieldnames=list(filas[0].keys(, lineterminator="
+")))
         wr.writeheader()
         wr.writerows(filas)
 
