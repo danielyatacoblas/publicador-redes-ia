@@ -7,3 +7,14 @@ __pycache__/
 data/borradores.csv
 data/publicados.csv
 data/metricas.csv
+
+# ── Credenciales: nunca deben entrar al repositorio ──
+*token*
+*.token
+.env
+.env.*
+*secret*
+*credential*
+*.pem
+*.key
+!*.key.example
