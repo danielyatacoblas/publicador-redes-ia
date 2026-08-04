@@ -291,7 +291,7 @@
     {
       "parameters": {
         "chatId": "REEMPLAZAR_CHAT_ID",
-        "text": "=⚠️ Falló la publicación de {{ $json.id_cola }}. Queda en la cola para reintento.",
+        "text": "= Falló la publicación de {{ $json.id_cola }}. Queda en la cola para reintento.",
         "additionalFields": {}
       },
       "id": "tg-err",

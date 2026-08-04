@@ -118,6 +118,7 @@ def test_validador_rechaza_exceso_de_caracteres():
 
 
 def test_validador_rechaza_emojis_en_linkedin():
+    # el emoji va como escape para que quede explícito que ES el dato de prueba
     b = Borrador("C1", "linkedin", "convocatoria", "t", "Hola 🚀")
     ok, problemas = validar_borrador(b)
     assert not ok and "emojis" in " ".join(problemas)
