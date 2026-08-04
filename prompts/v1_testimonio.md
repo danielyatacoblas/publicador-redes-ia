@@ -3,7 +3,7 @@
 **Uso:** historias de participantes, familias o voluntarios.
 **Objetivo del contenido:** generar confianza mostrando impacto real.
 
-> ⚠️ **Regla de protección de menores:** nunca se publica apellido completo,
+> **Regla de protección de menores:** nunca se publica apellido completo,
 > colegio, dirección ni datos de contacto de un menor. Solo nombre de pila y
 > edad, y siempre con autorización firmada de la familia.
 
