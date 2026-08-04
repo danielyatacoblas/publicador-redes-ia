@@ -71,7 +71,7 @@ def main():
     print(f"Contenidos del calendario: {len(calendario)}")
     print(f"Borradores generados y válidos: {len(cola.items)}")
     if invalidos:
-        print(f"  ⚠ descartados por validación: {len(invalidos)}")
+        print(f"   descartados por validación: {len(invalidos)}")
         for cid, red, probs in invalidos[:3]:
             print(f"    · {cid}/{red}: {', '.join(probs)}")
 
@@ -94,7 +94,7 @@ def main():
 
     print(f"\nRevisión humana (obligatoria antes de publicar):")
     print(f"  ✓ aprobados directo: {aprobados - editados}")
-    print(f"  ✏ editados y aprobados: {editados}")
+    print(f"   editados y aprobados: {editados}")
     print(f"  ✗ rechazados: {rechazados}")
 
     # ── 3. Publicación programada ──
@@ -106,13 +106,13 @@ def main():
 
     fallidos = cola.por_estado("fallido")
     if fallidos:
-        print(f"\n⚠ {len(fallidos)} publicaciones fallaron → reintento automático")
+        print(f"\n {len(fallidos)} publicaciones fallaron → reintento automático")
         cola.reintentar_fallidos(publicador_simulado, ahora)
 
     res = cola.resumen()
     print(f"\nPublicación:")
     print(f"  ✓ publicados: {res['publicado']}")
-    print(f"  ⚠ fallidos tras reintentos: {res['fallido']}")
+    print(f"   fallidos tras reintentos: {res['fallido']}")
     print(f"  · rechazados (nunca se publican): {res['rechazado']}")
 
     # ── 4. Métricas 24 h después (alimentan el dashboard del proyecto 03) ──

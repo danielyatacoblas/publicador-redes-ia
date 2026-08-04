@@ -11,7 +11,7 @@ multicanal** · implementar **IA generativa** en flujos internos.
 
 ---
 
-## 🎬 Qué hace
+## Qué hace
 
 ```
 Calendario de contenido (Google Sheets)
@@ -21,9 +21,9 @@ Calendario de contenido (Google Sheets)
   (largo, tono, emojis, hashtags, CTA)   ← Claude o plantillas
         ▼
   ┌──────── COLA DE APROBACIÓN ────────┐
-  │  una persona: ✅ aprueba           │   ⛔ nada se publica
-  │               ✏️ edita → revisión   │      sin este paso
-  │               ❌ rechaza (con motivo)│
+  │  una persona:  aprueba           │    nada se publica
+  │                edita → revisión   │      sin este paso
+  │                rechaza (con motivo)│
   └──────────────┬─────────────────────┘
                  ▼  (solo lo aprobado, en su fecha)
    Instagram · Facebook · LinkedIn · TikTok
@@ -45,7 +45,7 @@ def test_no_se_puede_publicar_sin_aprobacion():
 
 ---
 
-## ⚡ Probarlo en 2 minutos (sin API key ni n8n)
+## Probarlo en 2 minutos (sin API key ni n8n)
 
 ```bash
 pip install pytest
@@ -63,14 +63,14 @@ Borradores generados y válidos: 36
 
 Revisión humana (obligatoria antes de publicar):
   ✓ aprobados directo: 27
-  ✏ editados y aprobados: 5
+   editados y aprobados: 5
   ✗ rechazados: 4
 
-⚠ 4 publicaciones fallaron → reintento automático
+ 4 publicaciones fallaron → reintento automático
 
 Publicación:
   ✓ publicados: 32
-  ⚠ fallidos tras reintentos: 0
+   fallidos tras reintentos: 0
   · rechazados (nunca se publican): 4
 
 Tasa de interacción por origen del texto:
@@ -95,19 +95,19 @@ que cualquiera pueda evaluar el repo sin gastar un sol.
 
 ---
 
-## 🎨 Ejemplo real de salida (mismo contenido, 3 redes)
+## Ejemplo real de salida (mismo contenido, 3 redes)
 
 **Instagram** (2200 car., emojis, 8 hashtags):
 ```
-🚀 ¡Abrimos inscripciones para Taller de Robótica para niñas y niños de 8 a 12 años!
+ ¡Abrimos inscripciones para Taller de Robótica para niñas y niños de 8 a 12 años!
 
 Cuatro sesiones para construir y programar su primer robot con piezas
 reutilizables. No se necesita experiencia previa ni computadora en casa.
 
-📅 3 de agosto   📍 Sede Villa El Salvador
+ 3 de agosto    Sede Villa El Salvador
 Cupos limitados: 24 niñas y niños.
 
-Escríbenos por DM 📩
+Escríbenos por DM
 
 #ClubSTEM #EducacionSTEM #Peru #Inscripciones #TalleresSTEM #Robotica …
 ```
@@ -129,17 +129,17 @@ Conversemos sobre alianzas
 
 **TikTok** (300 car., hook directo, corta en frase completa):
 ```
-¿Taller de Robótica para niñas y niños de 8 a 12 años? 👀 Sí, y es gratis.
+¿Taller de Robótica para niñas y niños de 8 a 12 años?  Sí, y es gratis.
 Cuatro sesiones para construir y programar su primer robot con piezas reutilizables.
 
-Link en bio 🔗
+Link en bio
 
 #ClubSTEM #EducacionSTEM #Peru #Inscripciones #TalleresSTEM
 ```
 
 ---
 
-## 🐳 Con n8n de verdad
+## Con n8n de verdad
 
 ```bash
 docker compose up -d          # http://localhost:5678
@@ -161,7 +161,7 @@ Configurar antes de activar: `REEMPLAZAR_ID_HOJA`, `REEMPLAZAR_CHAT_ID`,
 
 ---
 
-## 📁 Estructura
+## Estructura
 
 ```
 02_publicador_redes_ia/
@@ -188,7 +188,7 @@ Configurar antes de activar: `REEMPLAZAR_ID_HOJA`, `REEMPLAZAR_CHAT_ID`,
 
 ---
 
-## 🧪 Qué está probado
+## Qué está probado
 
 | Área | Tests |
 | --- | --- |
@@ -203,7 +203,7 @@ Configurar antes de activar: `REEMPLAZAR_ID_HOJA`, `REEMPLAZAR_CHAT_ID`,
 
 ---
 
-## 🔐 Decisiones de diseño
+## Decisiones de diseño
 
 - **Funciona sin API key** (motor de plantillas): evaluable sin costo.
 - **Prompts versionados** con criterios de aceptación y reglas de protección
@@ -214,7 +214,7 @@ Configurar antes de activar: `REEMPLAZAR_ID_HOJA`, `REEMPLAZAR_CHAT_ID`,
 
 ---
 
-## 📌 Estado
+## Estado
 
-✅ **Funcional y probado en local.** 44 tests en verde, dos workflows n8n
+ **Funcional y probado en local.** 44 tests en verde, dos workflows n8n
 importables, data ficticia incluida y prompts listos para usar con Claude.
