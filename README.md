@@ -5,26 +5,51 @@
 <p align="center">
   <img alt="tests" src="https://img.shields.io/badge/tests-44%20passed-brightgreen">
   <img alt="n8n" src="https://img.shields.io/badge/n8n-2%20workflows-EA4B71">
-  <img alt="IA" src="https://img.shields.io/badge/IA-Claude%20(opcional">-8A63D2) <img alt="licencia" src="https://img.shields.io/badge/licencia-MIT-blue">
+  <img alt="IA" src="https://img.shields.io/badge/IA-Claude%20opcional-8A63D2">
+  <img alt="licencia" src="https://img.shields.io/badge/licencia-MIT-blue">
 </p>
 
 ---
 
-## Demo en video
+## La demo, en una orden
 
-<!-- ────────────────────────────────────────────────────────────────────
-     ESPACIO RESERVADO PARA EL VIDEO
+```console
+$ python scripts/simular_publicacion.py
 
-     Cuando lo tengas subido a YouTube (recomiendo "no listado"), reemplaza
-     este bloque por la miniatura clickeable:
+=== Publicador de redes con IA (simulación local) ===
 
-     [![Ver la demo](https://img.youtube.com/vi/TU_VIDEO_ID/maxresdefault.jpg)](https://youtu.be/TU_VIDEO_ID)
+Motor de generación: plantillas
+Contenidos del calendario: 14
+Borradores generados y válidos: 36
 
-     Y borra el aviso de abajo.
-     ──────────────────────────────────────────────────────────────────── -->
+Revisión humana (obligatoria antes de publicar):
+  ✓ aprobados directo: 27
+  ~ editados y aprobados: 5
+  ✗ rechazados: 4
 
-> *Video de la demo en camino.* Mientras tanto, el proyecto corre completo
-> en local en menos de dos minutos siguiendo [Probarlo](#probarlo-en-2-minutos).
+! 4 publicaciones fallaron → reintento automático
+
+Publicación:
+  ✓ publicados: 32
+  ✗ fallidos tras reintentos: 0
+  · rechazados (nunca se publican): 4
+
+Tasa de interacción por origen del texto:
+  humano       5.30 %  (5 posts)
+  plantillas   5.95 %  (27 posts)
+
+✓ data\borradores.csv (36 filas — así lo ve el equipo)
+✓ data\publicados.csv (32 filas)
+✓ data\metricas.csv (32 filas)
+```
+
+Ese es el ciclo entero: 14 entradas del calendario se convierten en 36
+borradores adaptados a cada red, **una persona los aprueba, edita o rechaza**,
+y solo entonces se publican. Los cuatro rechazados no se publican por ninguna
+vía, y hay tests que fallan si alguien intenta saltarse ese paso.
+
+La última tabla compara el rendimiento del texto generado contra el editado a
+mano: así se decide con datos si merece la pena editar más o menos.
 
 ---
 
