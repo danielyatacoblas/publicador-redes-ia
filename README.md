@@ -11,6 +11,30 @@
 
 ---
 
+## Para qué existe este repositorio
+
+Adaptar cada pieza de contenido a Instagram, Facebook, LinkedIn y TikTok —con su largo, su tono y sus hashtags— consume horas por semana. Automatizarlo del todo tampoco sirve: publicar sin revisar, en nombre de una organización que trabaja con menores, es inaceptable.
+
+**Este proyecto redacta un borrador por red social, lo deja en una cola donde una persona aprueba, edita o rechaza, y solo entonces publica en la fecha programada.**
+
+```mermaid
+flowchart TD
+    C["Calendario de contenido<br/>Google Sheets"] -->|cada día 08:00| P
+    P["Claude redacta<br/>un borrador por red"] --> Q
+    subgraph Q ["Cola de aprobación"]
+        R{"Revisión<br/>humana"}
+    end
+    R -->|rechaza| Z["Nunca se publica<br/>queda el motivo"]
+    R -->|edita| R
+    R -->|aprueba| S{"¿Llegó su<br/>fecha?"}
+    S -->|todavía no| T["Espera"]
+    S -->|sí| U["Instagram · Facebook · LinkedIn"]
+    U -->|error de API| V["Marcado como fallido<br/>reintento + aviso"]
+    U -->|24 h después| W["Métricas de vuelta<br/>al dashboard"]
+```
+
+---
+
 ## La demo, en una orden
 
 ```console
@@ -53,10 +77,6 @@ mano: así se decide con datos si merece la pena editar más o menos.
 
 ---
 
-## El problema
-
-Adaptar cada pieza de contenido a Instagram, Facebook, LinkedIn y TikTok —con su largo, su tono y sus hashtags— consume horas por semana. Automatizarlo del todo tampoco sirve: publicar sin revisar, en nombre de una organización que trabaja con menores, es inaceptable.
-
 ## Qué hace este proyecto
 
 1. **Un borrador por red**, con las reglas propias de cada una: LinkedIn sin emojis y tono institucional, TikTok corto y directo, Instagram con sus hashtags.
@@ -67,23 +87,9 @@ Adaptar cada pieza de contenido a Instagram, Facebook, LinkedIn y TikTok —con 
 
 ---
 
-## Cómo funciona
+## Cómo funciona por dentro
 
-```mermaid
-flowchart TD
-    C["Calendario de contenido<br/>Google Sheets"] -->|cada día 08:00| P
-    P["Claude redacta<br/>un borrador por red"] --> Q
-    subgraph Q ["Cola de aprobación"]
-        R{"Revisión<br/>humana"}
-    end
-    R -->|rechaza| Z["Nunca se publica<br/>queda el motivo"]
-    R -->|edita| R
-    R -->|aprueba| S{"¿Llegó su<br/>fecha?"}
-    S -->|todavía no| T["Espera"]
-    S -->|sí| U["Instagram · Facebook · LinkedIn"]
-    U -->|error de API| V["Marcado como fallido<br/>reintento + aviso"]
-    U -->|24 h después| W["Métricas de vuelta<br/>al dashboard"]
-```
+El recorrido completo está en el diagrama del principio. Estas son las piezas que lo ejecutan:
 
 ---
 
