@@ -46,18 +46,18 @@ Adaptar cada pieza de contenido a Instagram, Facebook, LinkedIn y TikTok —con 
 
 ```mermaid
 flowchart TD
-    C[" Calendario de contenido<br/>Google Sheets"] -->|cada día 08:00| P
-    P[" Claude redacta<br/>un borrador por red"] --> Q
-    subgraph Q [" Cola de aprobación"]
+    C["Calendario de contenido<br/>Google Sheets"] -->|cada día 08:00| P
+    P["Claude redacta<br/>un borrador por red"] --> Q
+    subgraph Q ["Cola de aprobación"]
         R{"Revisión<br/>humana"}
     end
-    R -->| rechaza| Z["Nunca se publica<br/>queda el motivo"]
-    R -->| edita| R
-    R -->| aprueba| S{"¿Llegó su<br/>fecha?"}
-    S -->|todavía no| T["⏳ Espera"]
-    S -->|sí| U[" Instagram · Facebook · LinkedIn"]
-    U -->|error de API| V[" Marcado como fallido<br/>reintento + aviso"]
-    U -->|24 h después| W[" Métricas de vuelta<br/>al dashboard"]
+    R -->|rechaza| Z["Nunca se publica<br/>queda el motivo"]
+    R -->|edita| R
+    R -->|aprueba| S{"¿Llegó su<br/>fecha?"}
+    S -->|todavía no| T["Espera"]
+    S -->|sí| U["Instagram · Facebook · LinkedIn"]
+    U -->|error de API| V["Marcado como fallido<br/>reintento + aviso"]
+    U -->|24 h después| W["Métricas de vuelta<br/>al dashboard"]
 ```
 
 ---
