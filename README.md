@@ -9,6 +9,19 @@
   <img alt="licencia" src="https://img.shields.io/badge/licencia-MIT-blue">
 </p>
 
+
+<p align="center">
+  <a href="docs/flujo.svg">
+    <img src="docs/flujo.svg" alt="De la hoja de calendario a la publicación, con una persona aprobando en medio" width="100%">
+  </a>
+</p>
+
+<sub>Ábrelo en grande: <a href="docs/flujo.svg"><code>docs/flujo.svg</code></a>.
+Las cifras de las tarjetas no están escritas a mano — las pone
+<a href="scripts/diagrama.py"><code>scripts/diagrama.py</code></a> leyendo
+<code>data/*.csv</code>, que produce la simulación. Si cambian los datos, se vuelve a correr y el dibujo se corrige
+solo.</sub>
+
 ---
 
 ## Para qué existe este repositorio
