@@ -11,6 +11,10 @@
 
 
 <p align="center">
+  <img src="docs/portada.svg" alt="Publicador de redes con IA: la IA redacta, una persona aprueba" width="100%">
+</p>
+
+<p align="center">
   <a href="docs/flujo.svg">
     <img src="docs/flujo.svg" alt="De la hoja de calendario a la publicación, con una persona aprobando en medio" width="100%">
   </a>
